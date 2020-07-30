@@ -29,7 +29,7 @@ A board's score is positive if the maximiser can win or negative if the minimise
 
 This solver uses a variant of minimax known as negamax. This simplified implementation can be used for zero-sum games, where one player's loss is exactly equal to another players gain (as is the case with this scoring system).
 
-<img src="https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%201.png" width="750" align="center">
+<a align="center"><img src="https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%201.png" width="750"></a>
 
 ###### Figure 1: minimax game tree containing a winning path ([modified from here](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0))
 
