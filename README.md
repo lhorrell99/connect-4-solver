@@ -2,15 +2,15 @@
 
 ## Introduction
 
-After the 4-in-a-Robot project led me down a wormhole, I wanted to see if I could implement a perfect solver for Connect 4 in Python. This article documents the process of tuning and pruning a brute force minimax approach to solve progressively more complex game states.
+After the 4-in-a-Robot project led me down a wormhole, I wanted to see if I could implement a perfect solver for Connect 4 in Python. This readme documents the process of tuning and pruning a brute force minimax approach to solve progressively more complex game states.
 
-#### Solvers: perfect versus imperfect
+### Solvers: perfect versus imperfect
 
 4-in-a-Robot did not require a perfect solver - it just needed to beat any human opponent. Consequently, if it couldn't find a game-ending state after searching to a specified depth, 4-in-a-robot stopped exploring subsequent moves and returned a heuristic evaluation of the intermediate game state. This strategy is a powerful weapon in the fight against asymptotic complexity - it caps the maximum time the solver spends on any given move. Using this strategy, 4-in-a-Robot can still comfortably beat any human opponent (I've certainly never beaten it), but it does still lose if faced with a perfect solver.
 
 So this perfect solver project exists solely to beat another project of mine at a kid's game... Was it worth the effort? Absolutely.
 
-#### [Standing on the shoulder of giants:](https://en.wikipedia.org/wiki/Standing_on_the_Shoulder_of_Giants) some great resources I've learnt from
+### [Standing on the shoulder of giants:](https://en.wikipedia.org/wiki/Standing_on_the_Shoulder_of_Giants) some great resources I've learnt from
 
 - [Solving Connect 4](http://blog.gamesolver.org/solving-connect-four/01-introduction/) | *Pascal Pons, 2015*
 - [Creating the (nearly) perfect Connect 4 bot](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0) | *Gilles Vandewiele, 2017*
@@ -29,7 +29,9 @@ A board's score is positive if the maximiser can win or negative if the minimise
 
 This solver uses a variant of minimax known as negamax. This simplified implementation can be used for zero-sum games, where one player's loss is exactly equal to another players gain (as is the case with this scoring system).
 
-GRAPHIC: minimax tree diagram
+<img src="./images/C4S Graphic 1.png" style="zoom:25%;" />
+
+###### Figure 1: minimax game tree containing a winning path ([modified from here](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0))
 
 To solve the empty board, a brute force minimax approach would have to evaluate 4,531,985,219,092 game states. At 50,000 game states per second, that's nearly 3 years of computation. Time for some pruning...
 
@@ -43,13 +45,17 @@ Integral to any good solver is the right data structure. Up to this point, board
 
 Using this binary representation, any board state can be fully encoded using 2 64-bit integers: the first stores the locations of one player's discs, and the second stores locations of the other player's discs.
 
-GRAPHIC: forming bitboards from a game state (Note: the sentinel row at the top of the board is included to prevent false positives when checking for alignments of 4 connected discs).
+<img src="./images/C4S Graphic 2.png" style="zoom:30%;" />
 
-The solver has to check for alignments of 4 connected discs after (almost) every move it makes, so it's a job that's worth doing efficiently. This is where bitboards really come into their own - checking for alignments is reduced to a few bitwise operations (see below)
+###### Figure 2: the indexing of bits to form a bitboard, with 0 as the rightmost bit ([modified from here](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0))
 
-GRAPHIC: checking for alignments (credit if needed)
+Note the sentinel row (6, 13, 20, 27, 34, 41, 48) in Figure 2, included to prevent false positives when checking for alignments of 4 connected discs. Using this structure, the game state above can be fully encoded as the two integers in figure 3.
 
-The elegance of this approach arises from the fact that we can check the whole board for alignments in parallel, instead of having to check the area surrounding one specified location on the board.
+![](./images/C4S Graphic 3.png)
+
+###### Figure 3: Encoding bitboards for a game state
+
+The solver has to check for alignments of 4 connected discs after (almost) every move it makes, so it's a job that's worth doing efficiently. This is where bitboards really come into their own - checking for alignments is reduced to a few bitwise operations. We can also check the whole board for alignments in parallel, instead of having to check the area surrounding one specified location on the board - pretty neat.
 
 ## Version 4: Memoization
 
@@ -67,8 +73,4 @@ The starting point for the improved move order is to simply arrange the columns 
 
 The second phase move ordering uses a slightly more targeted approach, in which each playable move is evaluated to see how many 3-disc alignments it produces (these have strong potential to create a winning alignment later). The code to do this is very similar to the winning alignment check, utilising a few bitwise operations. Any ties that arising from this approach are resolved by defaulting back to the initial middle out search order.
 
-That's enough work on this solver for now. I've learnt a fair bit about algorithms and certainly polished up my Python. The solver is still not quite ready to take on solving the empty board, so keep an eye out for some more optimisations one day soon...
-
-GRAPHIC: graph showing average solving time for end_easy dataset at each version (ish)...
-
-TODO: add cumulative speed improvement for each version?
+That's enough work on this solver for now. I've learnt a fair bit about algorithms and certainly polished up my Python. The solver is still not quite ready to take on solving the empty board though, so keep an eye out for some more optimisations one day soon...
