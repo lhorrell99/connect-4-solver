@@ -29,8 +29,8 @@ A board's score is positive if the maximiser can win or negative if the minimise
 
 This solver uses a variant of minimax known as negamax. This simplified implementation can be used for zero-sum games, where one player's loss is exactly equal to another players gain (as is the case with this scoring system).
 
-<a align="center"><img src="https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%201.png" width="750"></a>
-![](https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%201.png | width="750")
+![](https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%201.png)
+
 ###### Figure 1: minimax game tree containing a winning path ([modified from here](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0))
 
 To solve the empty board, a brute force minimax approach would have to evaluate 4,531,985,219,092 game states. At 50,000 game states per second, that's nearly 3 years of computation. Time for some pruning...
@@ -45,13 +45,13 @@ Integral to any good solver is the right data structure. Up to this point, board
 
 Using this binary representation, any board state can be fully encoded using 2 64-bit integers: the first stores the locations of one player's discs, and the second stores locations of the other player's discs.
 
-<img src="https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%202.png" width="750" align="center">
+![](https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%202.png)
 
 ###### Figure 2: the indexing of bits to form a bitboard, with 0 as the rightmost bit ([modified from here](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0))
 
 Note the sentinel row (6, 13, 20, 27, 34, 41, 48) in Figure 2, included to prevent false positives when checking for alignments of 4 connected discs. Using this structure, the game state above can be fully encoded as the two integers in figure 3.
 
-<img src="https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%203.png" width="750" align="center">
+![](https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%203.png)
 
 ###### Figure 3: Encoding bitboards for a game state
 
