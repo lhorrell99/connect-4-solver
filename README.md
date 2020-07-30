@@ -30,7 +30,7 @@ A board's score is positive if the maximiser can win or negative if the minimise
 This solver uses a variant of minimax known as negamax. This simplified implementation can be used for zero-sum games, where one player's loss is exactly equal to another players gain (as is the case with this scoring system).
 
 <a align="center"><img src="https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%201.png" width="750"></a>
-![]("https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%201.png" | width="750")
+![](https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%201.png | width="750")
 ###### Figure 1: minimax game tree containing a winning path ([modified from here](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0))
 
 To solve the empty board, a brute force minimax approach would have to evaluate 4,531,985,219,092 game states. At 50,000 game states per second, that's nearly 3 years of computation. Time for some pruning...
