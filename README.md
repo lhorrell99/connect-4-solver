@@ -29,7 +29,7 @@ A board's score is positive if the maximiser can win or negative if the minimise
 
 This solver uses a variant of minimax known as negamax. This simplified implementation can be used for zero-sum games, where one player's loss is exactly equal to another players gain (as is the case with this scoring system).
 
-<img src="./images/C4S Graphic 1.png" style="zoom:25%;" />
+<img src="./images/C4S Graphic 1.png" style="zoom:20%;" />
 
 ###### Figure 1: minimax game tree containing a winning path ([modified from here](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0))
 
@@ -51,7 +51,8 @@ Using this binary representation, any board state can be fully encoded using 2 6
 
 Note the sentinel row (6, 13, 20, 27, 34, 41, 48) in Figure 2, included to prevent false positives when checking for alignments of 4 connected discs. Using this structure, the game state above can be fully encoded as the two integers in figure 3.
 
-![](./images/C4S Graphic 3.png)
+
+<img src="./images/C4S Graphic 1.png" />
 
 ###### Figure 3: Encoding bitboards for a game state
 
