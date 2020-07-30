@@ -4,8 +4,6 @@ from math import floor
 from time import time
 
 raw_file = open('./tests_and_drafts/end_easy.txt', 'r')
-# raw_file = open('./tests_and_drafts/middle_easy.txt', 'r')
-# raw_file = open('./tests_and_drafts/begin_hard.txt', 'r')
 
 data = raw_file.readlines()
 
@@ -20,7 +18,7 @@ print('running test...')
 
 incorrect_eval = False
 start = time()
-for i in range(len(data)): # NOTE: CHECK BEFORE RUNNING
+for i in range(len(data)):  # NOTE: CHECK BEFORE RUNNING
     test_board = Board()
     for col in data[i][0]:
         test_board.play(int(col) - 1)
