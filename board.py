@@ -61,7 +61,6 @@ class Board:
         self.board_state[player] |= move
         self.history.append(col)
         self.moves += 1
-        self.node_count += 1 # TEMP TEMP TEMP
 
     def backtrack(self):
         opp = self.get_opponent()
@@ -84,12 +83,6 @@ class Board:
         ''' returns score of complete game (evaluated for winning opponent) '''
         return - (self.w * self.h + 1 - self.moves) // 2
 
-    # def __get_buffer(self):
-    #     buffer = 0
-    #     for i in range(self.w):
-    #         buffer |= 1 << (self.h + 1) * i + self.h
-    #     return buffer
-
     def __get_bit_shifts(self):
         return [
             1,              # | vertical
@@ -108,14 +101,10 @@ class Board:
         move = 1 << self.col_heights[col]
         count = 0
         state = self.board_state[player] | move
-        
+
         for shift in self.bit_shifts:
             test = state & (state >> shift) & (state >> 2 * shift)
             if test:
                 count += bin(test).count('1')
-        
-        # for shift in self.bit_shifts:
-        #     test = state & (state >> shift)
-        #     if test:
-        #         count += bin(test).count('1') // 10
+
         return count
