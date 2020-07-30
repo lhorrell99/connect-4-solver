@@ -32,13 +32,9 @@ def solve(board):
     TT = LRUCache(200000)
 
     def recurse(alpha, beta):
-
-        if not board.node_count % 50000:
-            print('explored nodes:', board.node_count)
-        
         alpha_original = alpha
 
-        # # transposition table lookup
+        # transposition table lookup
         if board.get_key() in TT:
             entry = TT[board.get_key()]
             if entry['LB']:
