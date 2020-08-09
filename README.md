@@ -10,7 +10,7 @@ After the 4-in-a-Robot project led me down a wormhole, I wanted to see if I coul
 
 So this perfect solver project exists solely to beat another project of mine at a kid's game... Was it worth the effort? Absolutely.
 
-### [Standing on the shoulder of giants:](https://en.wikipedia.org/wiki/Standing_on_the_Shoulder_of_Giants) some great resources I've learnt from
+### [Standing on the shoulders of giants:](https://en.wikipedia.org/wiki/Standing_on_the_Shoulder_of_Giants) some great resources I've learnt from
 
 - [Solving Connect 4](http://blog.gamesolver.org/solving-connect-four/01-introduction/) | *Pascal Pons, 2015*
 - [Creating the (nearly) perfect Connect 4 bot](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0) | *Gilles Vandewiele, 2017*
