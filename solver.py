@@ -28,8 +28,7 @@ def get_tt_entry(value, UB=False, LB=False):
 
 
 def solve(board):
-    # maxsize: ~ 4096 for end_easy, ~ 200000 for middle_easy
-    TT = LRUCache(200000)
+    TT = LRUCache(4096)
 
     def recurse(alpha, beta):
         alpha_original = alpha
