@@ -2,7 +2,7 @@
 
 ## Introduction
 
-After the 4-in-a-Robot project led me down a wormhole, I wanted to see if I could implement a perfect solver for Connect 4 in Python. This readme documents the process of tuning and pruning a brute force minimax approach to solve progressively more complex game states.
+After the [4-in-a-Robot](https://github.com/lhorrell99/4-in-a-robot) project led me down a wormhole, I wanted to see if I could implement a perfect solver for Connect 4 in Python. This readme documents the process of tuning and pruning a brute force minimax approach to solve progressively more complex game states.
 
 ### Solvers: perfect versus imperfect
 
