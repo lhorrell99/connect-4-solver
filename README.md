@@ -6,11 +6,11 @@ After the [4-in-a-Robot](https://github.com/lhorrell99/4-in-a-robot) project led
 
 ### Solvers: perfect versus imperfect
 
-4-in-a-Robot did not require a perfect solver - it just needed to beat any human opponent. Consequently, if it couldn't find a game-ending state after searching to a specified depth, 4-in-a-robot stopped exploring subsequent moves and returned a heuristic evaluation of the intermediate game state. This strategy is a powerful weapon in the fight against asymptotic complexity - it caps the maximum time the solver spends on any given move. Using this strategy, 4-in-a-Robot can still comfortably beat any human opponent (I've certainly never beaten it), but it does still lose if faced with a perfect solver.
+4-in-a-Robot did not require a perfect solver - it just needed to beat any human opponent. Consequently, if it couldn't find a game-ending state after searching to a specified depth, 4-in-a-robot stopped exploring subsequent moves and returned a heuristic evaluation of the intermediate game state. This strategy is powerful as it caps the maximum time the solver spends on any given move. With this strategy, 4-in-a-Robot can still comfortably beat any human opponent (I've certainly never beaten it), but it does still lose if faced with a perfect solver.
 
 So this perfect solver project exists solely to beat another project of mine at a kid's game... Was it worth the effort? Absolutely.
 
-### [Standing on the shoulders of giants:](https://en.wikipedia.org/wiki/Standing_on_the_Shoulder_of_Giants) some great resources I've learnt from
+### Some great resources
 
 - [Solving Connect 4](http://blog.gamesolver.org/solving-connect-four/01-introduction/) | *Pascal Pons, 2015*
 - [Creating the (nearly) perfect Connect 4 bot](https://towardsdatascience.com/creating-the-perfect-connect-four-ai-bot-c165115557b0) | *Gilles Vandewiele, 2017*
@@ -27,7 +27,7 @@ A board's score is positive if the maximiser can win or negative if the minimise
 - A score of -1 implies the minimiser wins with his last stone
 - A score of 0 implies a draw game
 
-This solver uses a variant of minimax known as negamax. This simplified implementation can be used for zero-sum games, where one player's loss is exactly equal to another players gain (as is the case with this scoring system).
+This solver uses a variant of minimax known as negamax. This simplified implementation can be used for zero-sum games, where one player's loss is exactly equal to another player's gain (as is the case with this scoring system).
 
 ![](https://github.com/lhorrell99/Connect4Solver/blob/master/images/C4S%20Graphic%201.png)
 
@@ -41,7 +41,7 @@ Alpha-beta pruning is the classic minimax optimisation. The principle is simple:
 
 ## Version 3: Bitboards
 
-Integral to any good solver is the right data structure. Up to this point, boards were represented by 2-dimensional NumPy arrays. These provided an intuitive and readable representation of any board state, but from an efficiency perspective, we can do better. The data structure I've used in the final solver uses a compact bitwise representation of states (in programming terms, this is as low-level as I've ever dared to venture...)
+Up to this point, boards were represented by 2-dimensional NumPy arrays. These provided an intuitive and readable representation of any board state, but from an efficiency perspective, we can do better. The data structure I've used in the final solver uses a compact bitwise representation of states.
 
 Using this binary representation, any board state can be fully encoded using 2 64-bit integers: the first stores the locations of one player's discs, and the second stores locations of the other player's discs.
 
@@ -67,9 +67,9 @@ A simple Least Recently Used (LRU) cache (borrowed from the [Python docs](https:
 
 ## Version 5: Optimised Move Ordering
 
-Alpha-beta works best when it finds a promising path through the tree early in the computation. This increases the number of branches that can be pruned (since the early result was near the optimal). At any point in a game of Connect 4, the most promising next move is unknown, so we return to the world of heuristic estimates. Any move ordering heuristic also needs to be pretty efficient, otherwise the overheads from running it quickly surpass the benefits of increased pruning.
+Alpha-beta works best when it finds a promising path through the tree early in the computation. This increases the number of branches that can be pruned (since the early result was near the optimal). At any point in a game of Connect 4, the most promising next move is unknown, se we rely on heuristic estimates. Any move ordering heuristic also needs to be pretty efficient, otherwise the overheads from running it quickly surpass the benefits of increased pruning.
 
-The starting point for the improved move order is to simply arrange the columns from the middle out. Middle columns are more likely to produce alignments, so they are searched first. The neat thing about this approach is that it carries (effectively) zero overhead - the columns can be ordered from the middle out when the Board class initialises and then just referenced during the computation.
+The starting point for the improved move order is to simply arrange the columns from the middle out. Middle columns are more likely to produce alignments, so they are searched first. The neat thing about this approach is that it carries (effectively) zero overhead - the columns can be ordered from the middle out when the board class initialises and then just referenced during the computation.
 
 The second phase move ordering uses a slightly more targeted approach, in which each playable move is evaluated to see how many 3-disc alignments it produces (these have strong potential to create a winning alignment later). The code to do this is very similar to the winning alignment check, utilising a few bitwise operations. Any ties that arising from this approach are resolved by defaulting back to the initial middle out search order.
 
